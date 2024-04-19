@@ -1,0 +1,50 @@
+package com.java8.newfeature;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class ArrayNumberProblem {
+
+	public static void main(String[] args) {
+
+		int[] numbers = { 1, 4, 7, 9, 23, 46, 57, 89, 34, 56, 78,1,2,3,4,5,6,7,8,9,23,46,45, 45, 65, 76, 87, 98, 12 };
+
+		System.out.println("Number : " + numbers);
+
+		List<Integer> sortedArray = Arrays.stream(numbers).boxed().sorted().collect(Collectors.toList());
+
+		System.out.println("Sorted Number : " + sortedArray);
+		
+		
+		List<Integer> reverseSortedArray = Arrays.stream(numbers).boxed().distinct().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+
+		System.out.println("Reverse Sorted Number : " + reverseSortedArray);
+		
+		Integer secondHigestNumber = Arrays.stream(numbers).boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst().orElse(0);
+		
+		System.out.println("Second Higest Number : " + secondHigestNumber);
+		
+		Map<Integer, Long> intCount = Arrays.stream(numbers).boxed().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		
+		System.out.println("number and there count  : " +intCount);
+		
+		List<Integer> duplicateNUmber = intCount.entrySet().stream().filter(k->k.getValue()>1).map(v->v.getKey()).collect(Collectors.toList());
+		
+		System.out.println("Duplicate number : "+duplicateNUmber);
+		
+		
+		List<Integer> nonRepeatedNumber = intCount.entrySet().stream().filter(k->k.getValue()<=1).map(v->v.getKey()).collect(Collectors.toList());
+
+		System.out.println("Non repeated NUmber : "+nonRepeatedNumber);
+
+		
+		
+
+		
+	}
+
+}
