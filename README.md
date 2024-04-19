@@ -3,33 +3,30 @@
 				98, 12 };
 
 		System.out.println("Number : " + numbers);
-
 # Sorted Number :
     List<Integer> sortedArray = Arrays.stream(numbers).boxed().sorted().collect(Collectors.toList());
 
 		System.out.println("Sorted Number : " + sortedArray);
-
-# Reverse Sorted Number  
+# Reverse Sorted Number : 
     List<Integer> reverseSortedArray = Arrays.stream(numbers).boxed().distinct().sorted(Comparator.reverseOrder())
 				.collect(Collectors.toList());
 
 		System.out.println("Reverse Sorted Number : " + reverseSortedArray);
-
-#Second Higest Number
+# Second Higest Number :
     
     Integer secondHigestNumber = Arrays.stream(numbers).boxed().sorted(Comparator.reverseOrder()).skip(1)
 				.findFirst().orElse(0);
 
 		System.out.println("Second Higest Number : " + secondHigestNumber);
 
-#number and there count 
+# Number and there count :
       
       Map<Integer, Long> intCount = Arrays.stream(numbers).boxed()
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
 		System.out.println("number and there count  : " + intCount);
 
-#Duplicate number :
+# Duplicate number :
     
     List<Integer> duplicateNUmber = intCount.entrySet().stream().filter(k -> k.getValue() > 1).map(v -> v.getKey())
 				.collect(Collectors.toList());
@@ -42,7 +39,7 @@
 
 		System.out.println("Non repeated NUmber : " + nonRepeatedNumber);
 
-#	 reduce with binary operator only
+# Reduce with binary operator only :
 
     BinaryOperator<Integer> maxFunction = (num1, num2) -> num1 > num2 ? num1 : num2;
 
@@ -50,11 +47,11 @@
 
 		System.out.println("Max number by binary : " + maxBinary);
 
-# reduce with indentifier and accumulator
-		Arrays.stream(numbers).boxed().reduce(Integer.MAX_VALUE, maxFunction);
+# Reduce with indentifier and accumulator
+	Arrays.stream(numbers).boxed().reduce(Integer.MAX_VALUE, maxFunction);
 
 # Use reduce with three parameters for parallel reduction
-		Integer sum = Arrays.stream(numbers).boxed().reduce(0, // identity
+	Integer sum = Arrays.stream(numbers).boxed().reduce(0, // identity
 				(acc, n) -> acc + n
 		// , // accumulator
 		// (partialResult1, partialResult2) -> partialResult1 + partialResult2 //
@@ -62,30 +59,29 @@
 		);
 
 # Print the sum
-		System.out.println("Sum of numbers: " + sum);
+	System.out.println("Sum of numbers: " + sum);
 
 		// Use reduce to find the sum of integers
 		int maxNum = Arrays.stream(numbers).boxed().reduce(0, (x, y) -> x > y ? x : y);
 		System.out.println("Max NUmber : " + maxNum);
 
-# get the second higher number form the array of numer
-		int secundMax = Arrays.stream(numbers).boxed().sorted(Comparator.reverseOrder()).skip(1).findAny().get();
+# Get the second higher number form the array of numer
+	int secundMax = Arrays.stream(numbers).boxed().sorted(Comparator.reverseOrder()).skip(1).findAny().get();
 		System.out.println(secundMax);
 
-#  get the second min number form the array of int
-		int secundMin = Arrays.stream(numbers).boxed().sorted().skip(1).findAny().get();
+# Get the second min number form the array of int
+	int secundMin = Arrays.stream(numbers).boxed().sorted().skip(1).findAny().get();
 		System.out.println(secundMin);
 
-# using the maX method of stream
+# Using the maX method of stream
+	Optional<Integer> findFirst = Arrays.stream(numbers).boxed().sorted(Integer::compareTo).findFirst();
 
-		Optional<Integer> findFirst = Arrays.stream(numbers).boxed().sorted(Integer::compareTo).findFirst();
+	Optional<Integer> max = Arrays.stream(numbers).boxed().max(Integer::compareTo);
 
-		Optional<Integer> max = Arrays.stream(numbers).boxed().max(Integer::compareTo);
+	Optional<Integer> min = Arrays.stream(numbers).boxed().max(Comparator.reverseOrder());
 
-		Optional<Integer> min = Arrays.stream(numbers).boxed().max(Comparator.reverseOrder());
+	Arrays.stream(numbers).boxed().reduce(Integer::max).get();
 
-		Arrays.stream(numbers).boxed().reduce(Integer::max).get();
-
-		Arrays.stream(numbers)// stream of int
+	Arrays.stream(numbers)// stream of int
 				.boxed() // converting to integer
 				.reduce(Integer.MIN_VALUE, (a, b) -> Integer.min(a, b));
