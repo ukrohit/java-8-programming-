@@ -10,93 +10,130 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ArrayNumberProblem {
+    public static void main(String[] args) {
+        // Sample array of numbers
+        int[] numbers = { 1, 4, 7, 9, 23, 46, 57, 89, 34, 56, 78, 1, 2, 3, 4, 5, 6, 7, 8, 9, 23, 46, 45, 45, 65, 76, 87, 98, 12 };
 
-	public static void main(String[] args) {
+        // Print the array (will print reference, for demo only)
+        System.out.println("Number : " + Arrays.toString(numbers));
 
-		int[] numbers = { 1, 4, 7, 9, 23, 46, 57, 89, 34, 56, 78, 1, 2, 3, 4, 5, 6, 7, 8, 9, 23, 46, 45, 45, 65, 76, 87,
-				98, 12 };
+        // Sort numbers using Java 8 Streams
+        List<Integer> sortedArray = Arrays.stream(numbers)
+            .boxed()
+            .sorted()
+            .collect(Collectors.toList());
+        System.out.println("Sorted Number : " + sortedArray);
 
-		System.out.println("Number : " + numbers);
+        // Reverse sort and remove duplicates
+        List<Integer> reverseSortedArray = Arrays.stream(numbers)
+            .boxed()
+            .distinct()
+            .sorted(Comparator.reverseOrder())
+            .collect(Collectors.toList());
+        System.out.println("Reverse Sorted Number : " + reverseSortedArray);
 
-		List<Integer> sortedArray = Arrays.stream(numbers).boxed().sorted().collect(Collectors.toList());
+        // Find the second highest number
+        Integer secondHighestNumber = Arrays.stream(numbers)
+            .boxed()
+            .sorted(Comparator.reverseOrder())
+            .skip(1)
+            .findFirst()
+            .orElse(0);
+        System.out.println("Second Highest Number : " + secondHighestNumber);
 
-		System.out.println("Sorted Number : " + sortedArray);
+        // Count occurrences of each number using groupingBy collector
+        Map<Integer, Long> intCount = Arrays.stream(numbers)
+            .boxed()
+            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println("Number and their count : " + intCount);
 
-		List<Integer> reverseSortedArray = Arrays.stream(numbers).boxed().distinct().sorted(Comparator.reverseOrder())
-				.collect(Collectors.toList());
+        // Find duplicate numbers (appearing more than once)
+        List<Integer> duplicateNumbers = intCount.entrySet().stream()
+            .filter(entry -> entry.getValue() > 1)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
+        System.out.println("Duplicate numbers : " + duplicateNumbers);
 
-		System.out.println("Reverse Sorted Number : " + reverseSortedArray);
+        // Find non-repeated numbers (appearing only once)
+        List<Integer> nonRepeatedNumbers = intCount.entrySet().stream()
+            .filter(entry -> entry.getValue() == 1)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
+        System.out.println("Non-repeated numbers : " + nonRepeatedNumbers);
 
-		Integer secondHigestNumber = Arrays.stream(numbers).boxed().sorted(Comparator.reverseOrder()).skip(1)
-				.findFirst().orElse(0);
+        // Use BinaryOperator with reduce to find max value
+        BinaryOperator<Integer> maxFunction = (num1, num2) -> num1 > num2 ? num1 : num2;
+        Optional<Integer> maxBinary = Arrays.stream(numbers)
+            .boxed()
+            .reduce(maxFunction);
+        System.out.println("Max number by binary operator : " + maxBinary.orElse(0));
 
-		System.out.println("Second Higest Number : " + secondHigestNumber);
+        // Reduce with identity and accumulator to find max value
+        int maxWithIdentity = Arrays.stream(numbers)
+            .boxed()
+            .reduce(Integer.MIN_VALUE, maxFunction);
+        System.out.println("Max number with identity : " + maxWithIdentity);
 
-		Map<Integer, Long> intCount = Arrays.stream(numbers).boxed()
-				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        // Use reduce to calculate sum of numbers
+        int sum = Arrays.stream(numbers)
+            .boxed()
+            .reduce(0, Integer::sum);
+        System.out.println("Sum of numbers: " + sum);
 
-		System.out.println("number and there count  : " + intCount);
+        // Use reduce to find max number (alternative)
+        int maxNum = Arrays.stream(numbers)
+            .boxed()
+            .reduce(0, (x, y) -> x > y ? x : y);
+        System.out.println("Max Number : " + maxNum);
 
-		List<Integer> duplicateNUmber = intCount.entrySet().stream().filter(k -> k.getValue() > 1).map(v -> v.getKey())
-				.collect(Collectors.toList());
+        // Get the second highest number (alternative)
+        int secondMax = Arrays.stream(numbers)
+            .boxed()
+            .sorted(Comparator.reverseOrder())
+            .skip(1)
+            .findAny()
+            .orElse(0);
+        System.out.println("Second Max (alternative): " + secondMax);
 
-		System.out.println("Duplicate number : " + duplicateNUmber);
+        // Get the second minimum number
+        int secondMin = Arrays.stream(numbers)
+            .boxed()
+            .sorted()
+            .skip(1)
+            .findAny()
+            .orElse(0);
+        System.out.println("Second Min: " + secondMin);
 
-		List<Integer> nonRepeatedNumber = intCount.entrySet().stream().filter(k -> k.getValue() <= 1)
-				.map(v -> v.getKey()).collect(Collectors.toList());
+        // Find first (smallest) number after sorting
+        Optional<Integer> findFirst = Arrays.stream(numbers)
+            .boxed()
+            .sorted(Integer::compareTo)
+            .findFirst();
+        System.out.println("First (min) number: " + findFirst.orElse(0));
 
-		System.out.println("Non repeated NUmber : " + nonRepeatedNumber);
+        // Find max using max() method
+        Optional<Integer> max = Arrays.stream(numbers)
+            .boxed()
+            .max(Integer::compareTo);
+        System.out.println("Max using max(): " + max.orElse(0));
 
-		BinaryOperator<Integer> maxFunction = (num1, num2) -> num1 > num2 ? num1 : num2;
+        // Find min using min() method
+        Optional<Integer> min = Arrays.stream(numbers)
+            .boxed()
+            .min(Integer::compareTo);
+        System.out.println("Min using min(): " + min.orElse(0));
 
-		// reduce with binary operator only
-		Optional<Integer> maxBinary = Arrays.stream(numbers).boxed().reduce(maxFunction);
+        // Reduce using Integer::max
+        int maxReduce = Arrays.stream(numbers)
+            .boxed()
+            .reduce(Integer::max)
+            .orElse(0);
+        System.out.println("Max using reduce(Integer::max): " + maxReduce);
 
-		System.out.println("Max number by binary : " + maxBinary);
-
-		// reduce with indentifier and accumulator
-		Arrays.stream(numbers).boxed().reduce(Integer.MAX_VALUE, maxFunction);
-
-		// Example array of integers
-
-		// Use reduce with three parameters for parallel reduction
-		Integer sum = Arrays.stream(numbers).boxed().reduce(0, // identity
-				(acc, n) -> acc + n
-		// , // accumulator
-		// (partialResult1, partialResult2) -> partialResult1 + partialResult2 //
-		// combiner
-		);
-
-		// Print the sum
-		System.out.println("Sum of numbers: " + sum);
-
-		// Use reduce to find the sum of integers
-		int maxNum = Arrays.stream(numbers).boxed().reduce(0, (x, y) -> x > y ? x : y);
-		System.out.println("Max NUmber : " + maxNum);
-
-		// get the second higher number form the array of numer
-		int secundMax = Arrays.stream(numbers).boxed().sorted(Comparator.reverseOrder()).skip(1).findAny().get();
-		System.out.println(secundMax);
-
-		// get the second min number form the array of int
-		int secundMin = Arrays.stream(numbers).boxed().sorted().skip(1).findAny().get();
-		System.out.println(secundMin);
-
-		// using the mac method of stream
-
-		Optional<Integer> findFirst = Arrays.stream(numbers).boxed().sorted(Integer::compareTo).findFirst();
-
-		Optional<Integer> max = Arrays.stream(numbers).boxed().max(Integer::compareTo);
-
-		Optional<Integer> min = Arrays.stream(numbers).boxed().max(Comparator.reverseOrder());
-
-		Arrays.stream(numbers).boxed().reduce(Integer::max).get();
-
-		Arrays.stream(numbers)// stream of int
-				.boxed() // converting to integer
-
-				.reduce(Integer.MIN_VALUE, (a, b) -> Integer.min(a, b));
-
-	}
-
+        // Reduce to find min value
+        int minReduce = Arrays.stream(numbers)
+            .boxed()
+            .reduce(Integer.MAX_VALUE, Integer::min);
+        System.out.println("Min using reduce(Integer::min): " + minReduce);
+    }
 }

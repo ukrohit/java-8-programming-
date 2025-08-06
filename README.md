@@ -1,3 +1,65 @@
+# Java 8 Stream API and Feature Demos
+
+This repository contains various Java 8 programs demonstrating the use of Stream API and other new features. Each example is designed for interview preparation and learning.
+
+## ArrayNumberProblem
+Demonstrates multiple Stream API operations on an array of numbers:
+- Sorting
+- Reverse sorting and removing duplicates
+- Finding the second highest and second lowest numbers
+- Counting occurrences of each number
+- Finding duplicates and non-repeated numbers
+- Using reduce with BinaryOperator and identity
+- Calculating sum, max, min using streams
+
+## Stream API Programs
+Each program below is located in `com/java8/feature/stream/` and demonstrates a specific Stream API feature:
+
+### StreamFilterDemo.java
+Filters even numbers from a list and prints them.
+
+### StreamMapDemo.java
+Maps each number in a list to its square and prints the results.
+
+### StreamSortDemo.java
+Sorts a list of strings alphabetically and prints them.
+
+### StreamCountDemo.java
+Counts how many numbers in a list are greater than 5.
+
+### StreamMaxMinDemo.java
+Finds and prints the maximum and minimum values in a list.
+
+### StreamCollectSetDemo.java
+Collects elements from a list into a Set, automatically removing duplicates.
+
+### StreamReduceSumDemo.java
+Reduces a list of numbers to their sum using the reduce method.
+
+### StreamGroupingDemo.java
+Groups strings by their length using the groupingBy collector.
+
+### StreamPartitioningDemo.java
+Partitions a list of numbers into even and odd using partitioningBy.
+
+### StreamFlatMapDemo.java
+Flattens a list of lists into a single stream and prints all elements.
+
+## Other Java 8 Feature Demos
+Located in `com/java8/feature/` subfolders:
+
+- **DefaultMethodDemo.java**: Shows default methods in interfaces.
+- **FunctionalInterfaceDemo.java**: Demonstrates functional interfaces and lambda expressions.
+- **MethodReferenceDemo.java**: Uses method references for sorting and printing.
+- **OptionalDemo.java**: Demonstrates the use of Optional to avoid null checks.
+- **DateTimeDemo.java**: Shows the new Date and Time API (`java.time`).
+- **CollectorsDemo.java**: Demonstrates joining strings using collectors.
+- **ParallelStreamDemo.java**: Shows how to use parallel streams for concurrent processing.
+
+---
+
+Each program is self-contained and includes comments explaining its logic and purpose. Use these examples to learn, revise, or discuss Java 8 features in interviews.
+
 # Number  Array 
     int[] numbers = { 1, 4, 7, 9, 23, 46, 57, 89, 34, 56, 78, 1, 2, 3, 4, 5, 6, 7, 8, 9, 23, 46, 45, 45, 65, 76, 87,
 				98, 12 };
